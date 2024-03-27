@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "csp/version"
+require_relative 'csp/version'
+require_relative 'csp/problems/sculpture'
 
-module Csp
-  class Error < StandardError; end
-  # Your code goes here...
-end
+module CSP; end
