@@ -20,7 +20,7 @@ module CSP
         end
 
         csp = CSP::Problem.new(variables:, domains:)
-        csp.add_constraint(CannotBeInSameRoom.new(%w[A B]))
+        csp.add_constraint(CannotBeInSameRoomConstraint.new(%w[A B]))
         csp.add_constraint(MustBeInSameRoomConstraint.new(%w[B C]))
         csp.add_constraint(RoomLimitToOneConstraint.new(room: 2, variables:))
         solution = csp.solve
@@ -30,7 +30,7 @@ module CSP
         puts message
       end
 
-      class CannotBeInSameRoom < ::CSP::Constraint
+      class CannotBeInSameRoomConstraint < ::CSP::Constraint
         def satisfies?(assignment)
           values = assignment.values_at(*variables)
 
