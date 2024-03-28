@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative '../../../shared/algorithms/filtering&ordering'
+
 RSpec.describe CSP::Algorithms::Ordering::NoOrder do
-  it_behaves_like 'filter algorithm initializes with problem'
+  it_behaves_like 'filter or ordering algorithm initializes with problem'
 
   describe '#call' do
     it 'returns the values in same order' do

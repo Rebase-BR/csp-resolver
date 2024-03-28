@@ -19,7 +19,7 @@ RSpec.describe CSP::Problem do
     end
 
     context 'when has variables and domains matching' do
-      it 'initializes them and sets constraints for variables' do
+      it 'initialize and sets constraint for the variable' do
         variable = double('Variable')
         variables = [variable]
         domains = { variable => [1, 2, 3] }
@@ -35,6 +35,26 @@ RSpec.describe CSP::Problem do
           constraints:,
           max_solutions:
         )
+      end
+      context 'when has multiple variables' do
+        it 'initializes them and sets constraints for variables' do
+          variable = double('Variable')
+          variable2 = double('Variable')
+          variables = [variable, variable2]
+          domains = { variable => [1, 2, 3], variable2 => [1, 2, 3] }
+          constraints = { variable => [], variable2 => [] }
+          max_solutions = 2
+
+          csp = described_class.new(variables:, domains:, max_solutions:)
+
+          expect(csp).to have_attributes(
+            class: described_class,
+            variables:,
+            domains:,
+            constraints:,
+            max_solutions:
+          )
+        end
       end
     end
 
@@ -98,7 +118,10 @@ RSpec.describe CSP::Problem do
 
     it 'returns solutions without nil values' do
       csp = described_class.new(domains: spy, variables: spy)
-      algorithm = instance_double(CSP::Algorithms::Backtracking, backtracking: nil)
+      algorithm = instance_double(
+        CSP::Algorithms::Backtracking,
+        backtracking: nil
+      )
 
       allow(CSP::Algorithms::Backtracking)
         .to receive(:new)

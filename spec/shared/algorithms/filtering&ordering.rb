@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'filter algorithm initializes with problem' do
+RSpec.shared_examples 'filter or ordering algorithm initializes with problem' do
   describe '.for' do
     context 'when receives a problem (csp) and dependency' do
       it ' initialize using problem' do

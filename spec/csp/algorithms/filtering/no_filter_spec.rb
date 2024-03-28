@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../../../shared/algorithms/filtering'
+require_relative '../../../shared/algorithms/filtering&ordering'
 
 RSpec.describe CSP::Algorithms::Filtering::NoFilter do
-  it_behaves_like 'filter algorithm initializes with problem'
+  it_behaves_like 'filter or ordering algorithm initializes with problem'
 
   describe '#call' do
     it 'returns the values without any change' do
