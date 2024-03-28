@@ -7,9 +7,9 @@ RSpec.shared_examples 'filter or ordering algorithm initializes with problem' do
         problem = spy
         dependency = spy
 
-        filter = described_class.for(problem:, dependency:)
+        order_or_filter = described_class.for(problem:, dependency:)
 
-        expect(filter).to have_attributes(class: described_class, problem:)
+        expect(order_or_filter).to have_attributes(class: described_class, problem:)
       end
     end
 
@@ -17,9 +17,9 @@ RSpec.shared_examples 'filter or ordering algorithm initializes with problem' do
       it 'initialize using problem' do
         problem = spy
 
-        filter = described_class.for(problem:)
+        order_or_filter = described_class.for(problem:)
 
-        expect(filter).to have_attributes(class: described_class, problem:)
+        expect(order_or_filter).to have_attributes(class: described_class, problem:)
       end
     end
   end
