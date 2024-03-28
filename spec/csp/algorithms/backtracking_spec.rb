@@ -21,7 +21,6 @@ RSpec.describe CSP::Algorithms::Backtracking do
         algorithm = described_class.new(problem:)
 
         allow(algorithm).to receive(:backtracking).and_call_original
-        allow(algorithm).to receive(:backtracking).with({ variable => 1 })
 
         expect(algorithm.backtracking).to be_empty
         expect(algorithm).to have_received(:backtracking).with(no_args)
@@ -127,8 +126,6 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         algorithm = described_class.new(problem:)
 
-        allow(algorithm).to receive(:constraints).and_return constraints
-
         expect(algorithm.backtracking).to be_empty
       end
     end
@@ -209,7 +206,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
     context 'variable satisfies all its constraints' do
       it 'returns true' do
         variable = double('Variable')
-        constraint = double('Constraint')
+        constraint = double('Constraint', satisfies?: true)
         assignment = { variable => 1 }
 
         problem = double(
@@ -218,11 +215,6 @@ RSpec.describe CSP::Algorithms::Backtracking do
           domains: spy,
           constraints: { variable => [constraint] }
         )
-
-        allow(constraint)
-          .to receive(:satisfies?)
-          .with(assignment)
-          .and_return true
 
         consistent = described_class
           .new(problem:)
@@ -235,20 +227,16 @@ RSpec.describe CSP::Algorithms::Backtracking do
     context 'when at least one constraint is not satisfied' do
       it 'returns false' do
         variable = double('Variable')
-        constraint = double('Constraint')
+        constraint = double('Constraint', satisfies?: true)
+        constraint2 = double('Constaint', satisfies?: false)
         assignment = { variable => 1 }
 
         problem = double(
           'Problem',
           variables: [variable],
           domains: spy,
-          constraints: { variable => [constraint] }
+          constraints: { variable => [constraint, constraint2] }
         )
-
-        allow(constraint)
-          .to receive(:satisfies?)
-          .with(assignment)
-          .and_return false
 
         consistent = described_class
           .new(problem:)
