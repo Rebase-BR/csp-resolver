@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative '../../constraint'
+require_relative '../../problem'
+
 module CSP
   module Problems
     class EventScheduling
@@ -47,4 +50,3 @@ module CSP
     end
   end
 end
-
