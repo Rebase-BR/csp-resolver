@@ -12,7 +12,6 @@ if ENV['COVERAGE']
   end
 end
 
-require 'active_support/all'
 require 'pry-byebug'
 
 Dir['./spec/shared/**/*.rb'].each { |file| require file }

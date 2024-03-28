@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'algorithms/backtracking'
-require 'active_support'
-require 'active_support/core_ext'
 require_relative 'utils'
 
 module CSP
