@@ -12,22 +12,21 @@ module CSP
     # 2. Sculptures B and C must be in the same room
     # 3. Room 2 can only hold one sculpture
     class Sculpture
-      def call
+      def self.call
         variables = %w[A B C]
 
-        domains = variables.each_with_object({}) do |variable, domains|
-          domains[variable] = [1, 2]
-        end
-
-        csp = CSP::Problem.new(variables:, domains:)
+        csp = CSP::Problem.new
+          .add_variable('A', domains: [1, 2])
+          .add_variable('B', domains: [1, 2])
+          .add_variable('C', domains: [1, 2])
         csp.add_constraint(CannotBeInSameRoomConstraint.new(%w[A B]))
         csp.add_constraint(MustBeInSameRoomConstraint.new(%w[B C]))
         csp.add_constraint(RoomLimitToOneConstraint.new(room: 2, variables:))
         solution = csp.solve
 
         message = solution || 'No solution found'
-
         puts message
+        message
       end
 
       class CannotBeInSameRoomConstraint < ::CSP::Constraint

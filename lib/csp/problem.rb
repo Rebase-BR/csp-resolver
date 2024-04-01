@@ -12,21 +12,31 @@ module CSP
 
     MissingDomain = Class.new(StandardError)
     MissingVariable = Class.new(StandardError)
+    VariableShouldNotBeEmpty = Class.new(StandardError)
+    DomainsShouldNotBeEmpty = Class.new(StandardError)
+    VariableAlreadySeted = Class.new(StandardError)
 
-    def initialize(variables: [], domains: {}, max_solutions: 1)
-      @variables = variables
-      @domains = domains
+    def initialize(max_solutions: 1)
+      @variables = []
+      @domains = {}
       @constraints = {}
       @max_solutions = max_solutions
-
-      @ordering_algorithm = nil
-      @filtering_algorithm = nil
-
-      setup_constraints
     end
 
     def solve(assignment = {})
       Utils::Array.wrap(search_solution(assignment))
+    end
+
+    def add_variable(variable, domains:)
+      raise VariableShouldNotBeEmpty, 'Variable was empty in the function parameter' if variable.empty?
+      raise DomainsShouldNotBeEmpty, 'Domains was empty in the function parameter' if domains.empty?
+      raise VariableAlreadySeted, "Variable #{variable} has already been seted" if variables.include?(variable)
+
+      variables << variable
+      @domains[variable] = domains
+      constraints[variable] = []
+
+      self
     end
 
     def add_constraint(constraint)
