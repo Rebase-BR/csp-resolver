@@ -2,11 +2,14 @@
 
 require_relative 'algorithms/backtracking'
 require_relative 'utils'
+require_relative 'default_constraints'
 
 module CSP
   # TODO: implement dependent factor with weight
   # TODO: implement lookahead, arc-consistency, ac3
   class Problem
+    include CSP::DefaultConstraints
+
     attr_reader :variables, :domains, :constraints, :max_solutions,
                 :ordering_algorithm, :filtering_algorithm
 

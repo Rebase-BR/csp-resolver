@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'csp/problem'
+require 'csp/default_constraints'
 
 RSpec.describe CSP::Problem do
   describe 'initialization' do
@@ -236,6 +237,23 @@ RSpec.describe CSP::Problem do
           .to raise_error described_class::VariableAlreadySeted,
                           'Variable #[Double "Variable"] has already been seted'
       end
+    end
+  end
+
+  describe '#all_different' do
+    it 'adds the default constraint' do
+      variable = double('Variable', empty?: false)
+      variable2 = double('Variable', empty?: false)
+      variables = [variable, variable2]
+      domains = double('Domains', empty?: false)
+
+      csp = described_class.new
+        .add_variables(variables, domains:)
+        .all_different(variables)
+
+      expect(csp.constraints[variable].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
+      expect(csp.constraints[variable2].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
+      expect(csp.constraints[variable].first.variables).to match_array(variables)
     end
   end
 
