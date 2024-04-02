@@ -169,6 +169,41 @@ RSpec.describe CSP::Problem do
       end
     end
 
+    describe '#add_variables' do
+      it 'should call #add_variable n times' do
+        variable = double('Variable', empty?: false)
+        variable2 = double('Variable', empty?: false)
+        domains = double('Domains', empty?: false)
+        variables = [variable, variable2]
+
+        csp = described_class.new
+        allow(csp).to receive(:add_variable).and_call_original
+        csp.add_variables(variables, domains:)
+
+        variables.each do |variable| # rubocop:disable Lint/ShadowingOuterLocalVariable
+          expect(csp).to have_received(:add_variable).with(variable, domains:).once
+        end
+      end
+
+      it 'add multiple variables with same domain' do
+        variable = double('Variable', empty?: false)
+        variable2 = double('Variable', empty?: false)
+        domains = double('Domains', empty?: false)
+        variables = [variable, variable2]
+
+        csp = described_class.new
+          .add_variables(variables, domains:)
+
+        expect(csp).to have_attributes(
+          class: described_class,
+          variables:,
+          domains: { variable => domains, variable2 => domains },
+          constraints: { variable => [], variable2 => [] },
+          max_solutions: 1
+        )
+      end
+    end
+
     context 'raises an error' do
       it 'because variable was empty' do
         variable = double('Variable', empty?: true)

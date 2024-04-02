@@ -41,6 +41,14 @@ module CSP
       self
     end
 
+    def add_variables(variables, domains:)
+      variables.each do |variable|
+        add_variable(variable, domains:)
+      end
+
+      self
+    end
+
     def add_constraint(constraint)
       constraint.variables.each do |variable|
         next constraints[variable] << constraint if constraints.include?(variable)

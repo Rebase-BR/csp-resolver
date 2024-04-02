@@ -10,9 +10,7 @@ module CSP
         variables = n.times.to_a
 
         csp = CSP::Problem.new
-        n.times do |i|
-          csp.add_variable(i, domains: variables)
-        end
+          .add_variables(variables, domains: variables)
         csp.add_constraint(QueensConstraint.new(variables))
         solution = csp.solve
 
