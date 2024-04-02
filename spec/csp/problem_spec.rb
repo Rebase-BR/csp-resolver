@@ -281,7 +281,7 @@ RSpec.describe CSP::Problem do
           .add_variable(diff_variable, domains:)
 
         expect { csp.add_constraint(constraint) }
-          .to raise_error described_class::MissingVariable,
+          .to raise_error described_class::CspMissingVariable,
                           "Constraint's variable doesn't exists in CSP"
       end
     end
