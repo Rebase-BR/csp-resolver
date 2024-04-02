@@ -1,20 +1,19 @@
 # frozen_string_literal: true
-#
+
 require_relative '../../constraint'
 require_relative '../../problem'
 
 module CSP
   module Problems
     class Queen
-      def call(n = 8)
-        columns = n.times.to_a
+      def self.call(n = 8)
+        variables = n.times.to_a
 
-        rows = columns.each_with_object({}) do |column, rows|
-          rows[column] = n.times.to_a
+        csp = CSP::Problem.new
+        n.times do |i|
+          csp.add_variable(i, domains: variables)
         end
-
-        csp = CSP::Problem.new(variables: columns, domains: rows)
-        csp.add_constraint(QueensConstraint.new(columns))
+        csp.add_constraint(QueensConstraint.new(variables))
         solution = csp.solve
 
         message = solution || 'No solution found'

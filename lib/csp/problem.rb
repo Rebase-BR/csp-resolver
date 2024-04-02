@@ -28,7 +28,9 @@ module CSP
     end
 
     def add_variable(variable, domains:)
-      raise VariableShouldNotBeEmpty, 'Variable was empty in the function parameter' if variable.empty?
+      if (variable.respond_to?(:empty?) && variable.empty?) || variable.nil?
+        raise VariableShouldNotBeEmpty, 'Variable was empty in the function parameter'
+      end
       raise DomainsShouldNotBeEmpty, 'Domains was empty in the function parameter' if domains.empty?
       raise VariableAlreadySeted, "Variable #{variable} has already been seted" if variables.include?(variable)
 
