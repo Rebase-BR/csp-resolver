@@ -17,7 +17,3 @@ module CSP
     end
   end
 end
-
-# def satisfies?(assignment)
-#   assignment.values == assignment.values.uniq
-# end
