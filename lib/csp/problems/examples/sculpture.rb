@@ -24,9 +24,7 @@ module CSP
         csp.add_constraint(RoomLimitToOneConstraint.new(room: 2, variables:))
         solution = csp.solve
 
-        message = solution || 'No solution found'
-        puts message
-        message
+        solution || 'No solution found'
       end
 
       class CannotBeInSameRoomConstraint < ::CSP::Constraint
