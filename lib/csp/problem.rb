@@ -82,16 +82,5 @@ module CSP
         max_solutions:
       )
     end
-
-    def setup_constraints
-      variables.each do |variable|
-        constraints[variable] = []
-
-        next if domains.key?(variable)
-
-        raise MissingDomain,
-              "Variable #{variable} does not have a domain assigned"
-      end
-    end
   end
 end
