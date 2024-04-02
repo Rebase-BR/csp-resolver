@@ -12,7 +12,7 @@ module CSP
     # 2. Sculptures B and C must be in the same room
     # 3. Room 2 can only hold one sculpture
     class Sculpture
-      def self.call
+      def call
         variables = %w[A B C]
 
         csp = CSP::Problem.new

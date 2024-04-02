@@ -6,7 +6,7 @@ require_relative '../../problem'
 module CSP
   module Problems
     class Queen
-      def self.call(n = 8)
+      def call(n = 8)
         variables = n.times.to_a
 
         csp = CSP::Problem.new

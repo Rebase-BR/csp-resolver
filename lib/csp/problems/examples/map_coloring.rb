@@ -7,21 +7,16 @@ module CSP
   module Problems
     class MapColoring
       def call
-        variables = [
-          'Western Australia',
-          'Northern Territory',
-          'South Australia',
-          'Queensland',
-          'New South Wales',
-          'Victoria',
-          'Tasmania'
-        ]
+        domains = %w[red blue green]
 
-        domains = variables.reduce({}) do |domains, variable|
-          domains.merge(variable => %w[red blue green])
-        end
-
-        csp = CSP::Problem.new(variables:, domains:)
+        csp = CSP::Problem.new
+          .add_variable('Western Australia', domains:)
+          .add_variable('Northern Territory', domains:)
+          .add_variable('South Australia', domains:)
+          .add_variable('Queensland', domains:)
+          .add_variable('New South Wales', domains:)
+          .add_variable('Victoria', domains:)
+          .add_variable('Tasmania', domains:)
 
         add_constraint(csp, 'Western Australia', 'Northern Territory')
         add_constraint(csp, 'Western Australia', 'South Australia')

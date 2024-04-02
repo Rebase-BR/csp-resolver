@@ -11,11 +11,12 @@ module CSP
         number_of_time_slots = 4
 
         variables = number_of_events.times.to_a
-        domains = variables.reduce({}) do |domains, variable|
-          domains.merge(variable => number_of_time_slots.times.to_a)
-        end
+        domains = number_of_time_slots.times.to_a
 
-        csp = CSP::Problem.new(variables:, domains:)
+        csp = CSP::Problem.new
+        number_of_events.times do |i|
+          csp.add_variable(i, domains:)
+        end
 
         variables.combination(2).each do |events|
           add_constraint(csp, *events)
