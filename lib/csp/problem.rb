@@ -13,7 +13,7 @@ module CSP
     attr_reader :variables, :domains, :constraints, :max_solutions,
                 :ordering_algorithm, :filtering_algorithm
 
-    CspMissingVariable = Class.new(StandardError)
+    InvalidConstraintVariable = Class.new(StandardError)
     VariableShouldNotBeEmpty = Class.new(StandardError)
     DomainsShouldNotBeEmpty = Class.new(StandardError)
     VariableAlreadySeted = Class.new(StandardError)
@@ -55,7 +55,7 @@ module CSP
       constraint.variables.each do |variable|
         next constraints[variable] << constraint if constraints.include?(variable)
 
-        raise CspMissingVariable,
+        raise InvalidConstraintVariable,
               "Constraint's variable doesn't exists in CSP"
       end
 

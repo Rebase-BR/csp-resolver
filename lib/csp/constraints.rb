@@ -6,8 +6,6 @@ module CSP
   module Constraints
     class AllDifferentConstraint < CSP::Constraint
       def satisfies?(assignment)
-        return true if assignment.values.any?(&:nil?)
-
         assignment.values == assignment.values.uniq
       end
     end
