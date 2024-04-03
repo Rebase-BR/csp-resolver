@@ -3,7 +3,7 @@
 require_relative 'constraint'
 
 module CSP
-  module DefaultConstraints
+  module Constraints
     class AllDifferentConstraint < CSP::Constraint
       def satisfies?(assignment)
         return true if assignment.values.any?(&:nil?)

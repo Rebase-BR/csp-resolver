@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'csp/problem'
-require 'csp/default_constraints'
+require 'csp/constraints'
 
 RSpec.describe CSP::Problem do
   describe 'initialization' do
@@ -251,8 +251,8 @@ RSpec.describe CSP::Problem do
         .add_variables(variables, domains:)
         .all_different
 
-      expect(csp.constraints[variable].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
-      expect(csp.constraints[variable2].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
+      expect(csp.constraints[variable].first).to be_a(CSP::Constraints::AllDifferentConstraint)
+      expect(csp.constraints[variable2].first).to be_a(CSP::Constraints::AllDifferentConstraint)
       expect(csp.constraints[variable].first.variables).to match_array(variables)
     end
   end
@@ -269,8 +269,8 @@ RSpec.describe CSP::Problem do
         .add_variables(variables, domains:)
         .unique([variable, variable2])
 
-      expect(csp.constraints[variable].first).to be_a(CSP::DefaultConstraints::UniqueConstraint)
-      expect(csp.constraints[variable2].first).to be_a(CSP::DefaultConstraints::UniqueConstraint)
+      expect(csp.constraints[variable].first).to be_a(CSP::Constraints::UniqueConstraint)
+      expect(csp.constraints[variable2].first).to be_a(CSP::Constraints::UniqueConstraint)
       expect(csp.constraints[variable3]).to eq []
       expect(csp.constraints[variable].first.variables).to match_array([variable, variable2])
     end

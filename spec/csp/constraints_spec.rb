@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'csp/default_constraints'
+require 'csp/constraints'
 
-RSpec.describe CSP::DefaultConstraints::AllDifferentConstraint do
+RSpec.describe CSP::Constraints::AllDifferentConstraint do
   describe '#satisfies?' do
     context 'when all assignments are different' do
       it 'retuns true' do
@@ -43,7 +43,7 @@ RSpec.describe CSP::DefaultConstraints::AllDifferentConstraint do
   end
 end
 
-RSpec.describe CSP::DefaultConstraints::UniqueConstraint do
+RSpec.describe CSP::Constraints::UniqueConstraint do
   describe '#satisfies?' do
     context 'when the assigments are unique given certain variables' do
       it 'retuns true' do
@@ -53,7 +53,7 @@ RSpec.describe CSP::DefaultConstraints::UniqueConstraint do
         variables = [variable, variable2]
         constraint = described_class.new(variables)
 
-        satisfies = constraint.satisfies?({ variable => 1, variable2 => 2, variable3 => 2})
+        satisfies = constraint.satisfies?({ variable => 1, variable2 => 2, variable3 => 2 })
 
         expect(satisfies).to eq true
       end
