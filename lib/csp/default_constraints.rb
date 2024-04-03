@@ -22,7 +22,7 @@ module CSP
       end
     end
 
-    def all_different(variables)
+    def all_different
       add_constraint(AllDifferentConstraint.new(variables))
 
       self

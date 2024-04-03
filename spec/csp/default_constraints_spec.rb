@@ -9,8 +9,7 @@ RSpec.describe CSP::DefaultConstraints::AllDifferentConstraint do
         variable = double('Variable')
         variable2 = double('Variable')
         variable3 = double('Variable')
-        variables = [variable, variable2, variable3]
-        constraint = described_class.new(variables)
+        constraint = described_class.new
 
         satisfies = constraint.satisfies?({ variable => 1, variable2 => 2, variable3 => 3 })
 
@@ -22,8 +21,7 @@ RSpec.describe CSP::DefaultConstraints::AllDifferentConstraint do
         variable = double('Variable')
         variable2 = double('Variable')
         variable3 = double('Variable')
-        variables = [variable, variable2, variable3]
-        constraint = described_class.new(variables)
+        constraint = described_class.new
 
         satisfies = constraint.satisfies?({ variable => 1, variable2 => 1, variable3 => 3 })
 
@@ -35,8 +33,7 @@ RSpec.describe CSP::DefaultConstraints::AllDifferentConstraint do
         variable = double('Variable')
         variable2 = double('Variable')
         variable3 = double('Variable')
-        variables = [variable, variable2, variable3]
-        constraint = described_class.new(variables)
+        constraint = described_class.new
 
         satisfies = constraint.satisfies?({ variable => 1, variable2 => 1, variable3 => 1 })
 

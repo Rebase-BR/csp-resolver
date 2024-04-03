@@ -249,7 +249,7 @@ RSpec.describe CSP::Problem do
 
       csp = described_class.new
         .add_variables(variables, domains:)
-        .all_different(variables)
+        .all_different
 
       expect(csp.constraints[variable].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
       expect(csp.constraints[variable2].first).to be_a(CSP::DefaultConstraints::AllDifferentConstraint)
