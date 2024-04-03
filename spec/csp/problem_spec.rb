@@ -257,6 +257,25 @@ RSpec.describe CSP::Problem do
     end
   end
 
+  describe '#unique' do
+    it 'adds the default constraint' do
+      variable = double('Variable', empty?: false)
+      variable2 = double('Variable', empty?: false)
+      variable3 = double('Variable', empty?: false)
+      variables = [variable, variable2, variable3]
+      domains = double('Domains', empty?: false)
+
+      csp = described_class.new
+        .add_variables(variables, domains:)
+        .unique([variable, variable2])
+
+      expect(csp.constraints[variable].first).to be_a(CSP::DefaultConstraints::UniqueConstraint)
+      expect(csp.constraints[variable2].first).to be_a(CSP::DefaultConstraints::UniqueConstraint)
+      expect(csp.constraints[variable3]).to eq []
+      expect(csp.constraints[variable].first.variables).to match_array([variable, variable2])
+    end
+  end
+
   describe '#add_constraint' do
     it 'adds a constraint to variable' do
       variable = double('Variable', empty?: false)

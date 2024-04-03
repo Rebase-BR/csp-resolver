@@ -19,7 +19,7 @@ module CSP
           .add_variable('A', domains: [1, 2])
           .add_variable('B', domains: [1, 2])
           .add_variable('C', domains: [1, 2])
-        csp.add_constraint(CannotBeInSameRoomConstraint.new(%w[A B]))
+          .unique(%w[A B])
         csp.add_constraint(MustBeInSameRoomConstraint.new(%w[B C]))
         csp.add_constraint(RoomLimitToOneConstraint.new(room: 2, variables:))
         solution = csp.solve
