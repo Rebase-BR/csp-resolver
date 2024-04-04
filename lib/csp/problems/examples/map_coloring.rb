@@ -6,7 +6,7 @@ require_relative '../../problem'
 module CSP
   module Problems
     class MapColoring
-      def call
+      def call # rubocop:disable Metrics/MethodLength
         variables = [
           'Western Australia',
           'Northern Territory',

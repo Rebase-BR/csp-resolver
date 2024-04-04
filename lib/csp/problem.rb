@@ -77,13 +77,34 @@ module CSP
     private
 
     def validate_parameters(constraint, variables, block)
-      raise ArgumentError, 'Either constraint or block must be provided' if constraint.nil? && block.nil?
-      raise ArgumentError, 'Both constraint and block cannot be provided at the same time' if constraint && block
-      raise ArgumentError, 'Variables must be provided when using a block' if block && variables.nil?
-
-      return unless !variables.nil? && block.arity > variables.length
+      if missing_both_constraint_and_block?(constraint, block)
+        raise ArgumentError, 'Either constraint or block must be provided'
+      end
+      if provided_both_constraint_and_block?(constraint, block)
+        raise ArgumentError, 'Both constraint and block cannot be provided at the same time'
+      end
+      if missing_variables_for_block?(block, variables)
+        raise ArgumentError, 'Variables must be provided when using a block'
+      end
+      return unless block_arity_exceeds_variables?(block, variables)
 
       raise ArgumentError, 'Block should not have more arity than the quantity of variables'
+    end
+
+    def missing_both_constraint_and_block?(constraint, block)
+      constraint.nil? && block.nil?
+    end
+
+    def provided_both_constraint_and_block?(constraint, block)
+      constraint && block
+    end
+
+    def missing_variables_for_block?(block, variables)
+      block && variables.nil?
+    end
+
+    def block_arity_exceeds_variables?(block, variables)
+      !variables.nil? && block.arity > variables.length
     end
 
     def search_solution(assignment = {})

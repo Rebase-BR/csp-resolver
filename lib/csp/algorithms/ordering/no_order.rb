@@ -6,7 +6,7 @@ module CSP
       class NoOrder
         attr_reader :problem
 
-        def self.for(problem:, dependency: nil)
+        def self.for(problem:, dependency: nil) # rubocop:disable Lint/UnusedMethodArgument
           new(problem)
         end
 

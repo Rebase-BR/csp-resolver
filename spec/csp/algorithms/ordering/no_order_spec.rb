@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../shared/algorithms/filtering&ordering'
+require_relative '../../../shared/algorithms/filtering_ordering'
 
 RSpec.describe CSP::Algorithms::Ordering::NoOrder do
   it_behaves_like 'filter or ordering algorithm initializes with problem'

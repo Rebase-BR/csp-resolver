@@ -26,7 +26,7 @@ RSpec.describe CSP::Problems::Sculpture::RoomLimitToOneConstraint do
         variables = [variable, variable2, variable3]
         constraint = described_class.new(room: 1, variables:)
 
-        satisfies = constraint.satisfies?({ variable => 3, variable2 => 2, variable3 => 2})
+        satisfies = constraint.satisfies?({ variable => 3, variable2 => 2, variable3 => 2 })
 
         expect(satisfies).to eq true
       end

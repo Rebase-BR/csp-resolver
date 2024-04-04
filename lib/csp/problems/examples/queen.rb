@@ -6,8 +6,8 @@ require_relative '../../problem'
 module CSP
   module Problems
     class Queen
-      def call(n = 8)
-        variables = n.times.to_a
+      def call(queens_number = 8)
+        variables = queens_number.times.to_a
 
         csp = CSP::Problem.new
           .add_variables(variables, domains: variables)

@@ -6,7 +6,7 @@ module CSP
       class NoFilter
         attr_reader :problem
 
-        def self.for(problem:, dependency: nil)
+        def self.for(problem:, dependency: nil) # rubocop:disable Lint/UnusedMethodArgument
           new(problem)
         end
 
@@ -14,11 +14,9 @@ module CSP
           @problem = problem
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
-        def call(values:, assignment_values: [])
+        def call(values:, assignment_values: []) # rubocop:disable Lint/UnusedMethodArgument
           values
         end
-        # rubocop:enable Lint/UnusedMethodArgument
       end
     end
   end
