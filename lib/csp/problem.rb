@@ -51,7 +51,11 @@ module CSP
       self
     end
 
-    def add_constraint(constraint)
+    def add_constraint(constraint = nil, variables: nil, &block)
+      validate_parameters(constraint, variables, block)
+
+      constraint = CustomConstraint.new(variables, block) if block
+
       constraint.variables.each do |variable|
         next constraints[variable] << constraint if constraints.include?(variable)
 
@@ -59,7 +63,7 @@ module CSP
               "Constraint's variable doesn't exists in CSP"
       end
 
-      true
+      self
     end
 
     def add_ordering(ordering_algorithm)
@@ -71,6 +75,16 @@ module CSP
     end
 
     private
+
+    def validate_parameters(constraint, variables, block)
+      raise ArgumentError, 'Either constraint or block must be provided' if constraint.nil? && block.nil?
+      raise ArgumentError, 'Both constraint and block cannot be provided at the same time' if constraint && block
+      raise ArgumentError, 'Variables must be provided when using a block' if block && variables.nil?
+
+      return unless !variables.nil? && block.arity > variables.length
+
+      raise ArgumentError, 'Block should not have more arity than the quantity of variables'
+    end
 
     def search_solution(assignment = {})
       algorithm.backtracking(assignment)

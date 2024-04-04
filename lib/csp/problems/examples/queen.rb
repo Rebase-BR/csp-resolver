@@ -11,7 +11,7 @@ module CSP
 
         csp = CSP::Problem.new
           .add_variables(variables, domains: variables)
-        csp.add_constraint(QueensConstraint.new(variables))
+          .add_constraint(QueensConstraint.new(variables))
         solution = csp.solve
 
         message = solution || 'No solution found'

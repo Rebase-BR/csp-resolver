@@ -20,6 +20,22 @@ module CSP
       end
     end
 
+    class CustomConstraint < CSP::Constraint
+      attr_reader :block
+
+      def initialize(variables, block)
+        super(variables)
+        @block = block
+      end
+
+      def satisfies?(assignment)
+        values = assignment.values_at(*variables)
+        return true if values.any?(&:nil?)
+
+        block.call(values)
+      end
+    end
+
     def all_different
       add_constraint(AllDifferentConstraint.new(variables))
 

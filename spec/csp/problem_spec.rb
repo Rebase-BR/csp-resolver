@@ -277,33 +277,119 @@ RSpec.describe CSP::Problem do
   end
 
   describe '#add_constraint' do
-    it 'adds a constraint to variable' do
-      variable = double('Variable', empty?: false)
-      domains = double('Domains', empty?: false)
-      constraint = double('Constraint', variables: [variable])
-
-      csp = described_class.new
-        .add_variable(variable, domains:)
-
-      expect(csp.add_constraint(constraint)).to eq true
-      expect(csp.constraints).to include(variable => [constraint])
-    end
-
-    context 'when multiple variables' do
-      it 'maps the constraint for each one' do
+    context 'when passing a constraint instance to the method' do
+      it 'adds a constraint to variable' do
         variable = double('Variable', empty?: false)
-        variable2 = double('Variable', empty?: false)
-        variables = [variable, variable2]
         domains = double('Domains', empty?: false)
-        constraint = double('Constraint', variables:)
+        constraint = double('Constraint', variables: [variable])
 
         csp = described_class.new
           .add_variable(variable, domains:)
-          .add_variable(variable2, domains:)
+          .add_constraint(constraint)
 
-        expect(csp.add_constraint(constraint)).to eq true
         expect(csp.constraints).to include(variable => [constraint])
-        expect(csp.constraints).to include(variable2 => [constraint])
+      end
+
+      context 'when multiple variables' do
+        it 'maps the constraint for each one' do
+          variable = double('Variable', empty?: false)
+          variable2 = double('Variable', empty?: false)
+          variables = [variable, variable2]
+          domains = double('Domains', empty?: false)
+          constraint = double('Constraint', variables:)
+
+          csp = described_class.new
+            .add_variable(variable, domains:)
+            .add_variable(variable2, domains:)
+            .add_constraint(constraint)
+
+          expect(csp.constraints).to include(variable => [constraint])
+          expect(csp.constraints).to include(variable2 => [constraint])
+        end
+      end
+    end
+
+    context 'when passing a block and variables to the method' do
+      it 'adds a constraint to variable' do
+        variable = double('Variable', empty?: false)
+        domains = double('Domains', empty?: false)
+
+        csp = described_class.new
+          .add_variable(variable, domains:)
+          .add_constraint(variables: [variable]) { |var| var == 0 }
+
+        expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
+      end
+
+      context 'when multiple variables' do
+        it 'adds a constraint for each variable' do
+          variable = double('Variable', empty?: false)
+          variable2 = double('Variable', empty?: false)
+          domains = double('Domains', empty?: false)
+          variables = [variable, variable2]
+
+          csp = described_class.new
+            .add_variables(variables, domains:)
+            .add_constraint(variables:) { |var, var3| var == var3 }
+
+          expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
+          expect(csp.constraints[variable2].first).to be_a(CSP::Constraints::CustomConstraint)
+        end
+      end
+    end
+
+    context 'when parameter validates fail' do
+      context 'variables was passed but block not' do
+        it 'raises an error' do
+          variable = double('Variable', empty?: false)
+          domains = double('Domains', empty?: false)
+          variables = [variable]
+          csp = described_class.new
+            .add_variables(variables, domains:)
+
+          expect { csp.add_constraint(variables:) }
+            .to raise_error ArgumentError, 'Either constraint or block must be provided'
+        end
+      end
+      context 'block was passed but variable not' do
+        it 'raises an error' do
+          variable = double('Variable', empty?: false)
+          domains = double('Domains', empty?: false)
+          variables = [variable]
+
+          csp = described_class.new
+            .add_variables(variables, domains:)
+
+          expect { csp.add_constraint { |var, var3| var == var3 } }
+            .to raise_error ArgumentError, 'Variables must be provided when using a block'
+        end
+      end
+      context 'constraint and block was passed' do
+        it 'raises an error' do
+          variable = double('Variable', empty?: false)
+          domains = double('Domains', empty?: false)
+          variables = [variable]
+          constraint = double('Constraint', variables:)
+
+          csp = described_class.new
+            .add_variables(variables, domains:)
+
+          expect { csp.add_constraint(constraint) { |var, var3| var == var3 } }
+            .to raise_error ArgumentError, 'Both constraint and block cannot be provided at the same time'
+        end
+      end
+      context 'block arity is greather than variables quantity' do
+        it 'raises an error' do
+          variable = double('Variable', empty?: false)
+          domains = double('Domains', empty?: false)
+          variables = [variable]
+
+          csp = described_class.new
+            .add_variables(variables, domains:)
+
+          expect { csp.add_constraint(variables:) { |var, var3| var == var3 } }
+            .to raise_error ArgumentError, 'Block should not have more arity than the quantity of variables'
+        end
       end
     end
 
