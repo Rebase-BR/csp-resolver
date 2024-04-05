@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'csp/problems/examples/sculpture'
+require_relative '../../../../examples/sculpture'
 
-RSpec.describe CSP::Problems::Sculpture::RoomLimitToOneConstraint do
+RSpec.describe CSP::Examples::Sculpture::RoomLimitToOneConstraint do
   describe '#satisfies?' do
     context 'when only one variable in the assigment has the room value' do
       it 'retuns true' do

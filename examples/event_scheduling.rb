@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../constraint'
-require_relative '../../problem'
+require_relative '../lib/csp/constraint'
+require_relative '../lib/csp/problem'
 
 module CSP
   module Problems

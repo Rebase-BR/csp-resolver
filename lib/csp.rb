@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'csp/version'
-require_relative 'csp/problems/examples/sculpture'
-require_relative 'csp/problems/examples/event_scheduling'
-require_relative 'csp/problems/examples/map_coloring'
-require_relative 'csp/problems/examples/queen'
+require_relative '../examples/sculpture'
+require_relative '../examples/event_scheduling'
+require_relative '../examples/map_coloring'
+require_relative '../examples/queen'
+require_relative 'csp/constraint'
+require_relative 'csp/problem'
 
 module CSP; end

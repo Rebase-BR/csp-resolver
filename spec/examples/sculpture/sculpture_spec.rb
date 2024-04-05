@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'csp/problems/examples/sculpture'
+require_relative '../../../examples/sculpture'
 
-RSpec.describe CSP::Problems::Sculpture do
+RSpec.describe CSP::Examples::Sculpture do
   describe '#call' do
     it 'returns the solution for the problem' do
       expect(described_class.new.call).to eq([{ 'A' => 2, 'B' => 1, 'C' => 1 }])
