@@ -5,9 +5,11 @@ require 'simplecov'
 
 if ENV['COVERAGE']
   SimpleCov.start do
-    add_group 'CSP', 'csp'
-    add_group 'CSP Algorithms', 'csp/algorithms'
-    add_group 'CSP Problems', 'csp/problems'
+    add_filter '/spec'
+
+    add_group 'CSP', '/lib/csp'
+    add_group 'CSP Algorithms', '/lib/csp/algorithms'
+    add_group 'CSP Examples', '/examples'
   end
 end
 
