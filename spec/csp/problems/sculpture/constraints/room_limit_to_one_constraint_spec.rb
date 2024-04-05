@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'csp/problems/examples/sculpture'
 
 RSpec.describe CSP::Problems::Sculpture::RoomLimitToOneConstraint do

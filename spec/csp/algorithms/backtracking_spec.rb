@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'csp/algorithms/backtracking'
 
 RSpec.describe CSP::Algorithms::Backtracking do
@@ -9,7 +10,6 @@ RSpec.describe CSP::Algorithms::Backtracking do
         variable = double('Variable')
         variable2 = double('Variable')
         variables = [variable, variable2]
-
         domains = { variable => [1], variable2 => [10] }
 
         constraint = double('constraint', satisfies?: true)

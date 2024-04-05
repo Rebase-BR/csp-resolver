@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'simplecov'
 
 if ENV['COVERAGE']
   SimpleCov.start do
-    add_filter 'spec/'
-
     add_group 'CSP', 'csp'
     add_group 'CSP Algorithms', 'csp/algorithms'
     add_group 'CSP Problems', 'csp/problems'
   end
 end
-
-require 'pry-byebug'
 
 Dir['./spec/shared/**/*.rb'].each { |file| require file }
 

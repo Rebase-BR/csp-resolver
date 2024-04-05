@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require_relative '../../../shared/algorithms/filtering_ordering'
 
 RSpec.describe CSP::Algorithms::Ordering::NoOrder do

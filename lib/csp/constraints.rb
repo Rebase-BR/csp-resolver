@@ -32,7 +32,7 @@ module CSP
         values = assignment.values_at(*variables)
         return true if values.any?(&:nil?)
 
-        block.call(values)
+        block.call(*values)
       end
     end
 

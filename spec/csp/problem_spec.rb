@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
 require 'csp/problem'
 require 'csp/constraints'
 
@@ -313,10 +314,12 @@ RSpec.describe CSP::Problem do
       it 'adds a constraint to variable' do
         variable = double('Variable', empty?: false)
         domains = double('Domains', empty?: false)
+        variables = [variable]
 
         csp = described_class.new
           .add_variable(variable, domains:)
-          .add_constraint(variables: [variable]) { |var| var == 0 }
+
+        csp.add_constraint(variables:) { |var| var == 0 }
 
         expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
       end
@@ -330,7 +333,8 @@ RSpec.describe CSP::Problem do
 
           csp = described_class.new
             .add_variables(variables, domains:)
-            .add_constraint(variables:) { |var, var3| var == var3 }
+
+          csp.add_constraint(variables:) { |var, var3| var == var3 }
 
           expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
           expect(csp.constraints[variable2].first).to be_a(CSP::Constraints::CustomConstraint)
