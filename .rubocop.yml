@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 3.2.2
+  TargetRubyVersion: 2.5
   NewCops: enable
   SuggestExtensions: false
 Metrics/BlockLength:
@@ -19,5 +19,7 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Style/Documentation:
   Enabled: false
-Lint/EndAlignment:
+Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
+Style/ObjectThen:
+  EnforcedStyle: yield_self

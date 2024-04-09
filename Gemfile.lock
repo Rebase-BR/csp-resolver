@@ -63,7 +63,7 @@ DEPENDENCIES
   csp-solver!
   rake (~> 13.0)
   rspec
-  rubocop
+  rubocop (~> 1.28)
   simplecov
 
 BUNDLED WITH

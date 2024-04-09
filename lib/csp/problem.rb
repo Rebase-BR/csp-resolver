@@ -45,7 +45,7 @@ module CSP
 
     def add_variables(variables, domains:)
       variables.each do |variable|
-        add_variable(variable, domains:)
+        add_variable(variable, domains: domains)
       end
 
       self
@@ -114,9 +114,9 @@ module CSP
     def algorithm
       Algorithms::Backtracking.new(
         problem: self,
-        ordering_algorithm:,
-        filtering_algorithm:,
-        max_solutions:
+        ordering_algorithm: ordering_algorithm,
+        filtering_algorithm: filtering_algorithm,
+        max_solutions: max_solutions
       )
     end
   end

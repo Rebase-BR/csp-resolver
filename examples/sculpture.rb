@@ -21,7 +21,7 @@ module CSP
           .add_variable('C', domains: [1, 2])
           .unique(%w[A B])
           .add_constraint(variables: %w[B C]) { |b, c| b == c }
-          .add_constraint(RoomLimitToOneConstraint.new(room: 2, variables:))
+          .add_constraint(RoomLimitToOneConstraint.new(room: 2, variables: variables))
         solution = csp.solve
 
         solution || 'No solution found'

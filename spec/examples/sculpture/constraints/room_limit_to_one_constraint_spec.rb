@@ -11,7 +11,7 @@ RSpec.describe CSP::Examples::Sculpture::RoomLimitToOneConstraint do
         variable2 = double('Variable')
         variable3 = double('Variable')
         variables = [variable, variable2, variable3]
-        constraint = described_class.new(room: 1, variables:)
+        constraint = described_class.new(room: 1, variables: variables)
 
         satisfies = constraint.satisfies?({ variable => 1, variable2 => 2, variable3 => 2 })
 
@@ -25,7 +25,7 @@ RSpec.describe CSP::Examples::Sculpture::RoomLimitToOneConstraint do
         variable2 = double('Variable')
         variable3 = double('Variable')
         variables = [variable, variable2, variable3]
-        constraint = described_class.new(room: 1, variables:)
+        constraint = described_class.new(room: 1, variables: variables)
 
         satisfies = constraint.satisfies?({ variable => 3, variable2 => 2, variable3 => 2 })
 
@@ -39,7 +39,7 @@ RSpec.describe CSP::Examples::Sculpture::RoomLimitToOneConstraint do
         variable2 = double('Variable')
         variable3 = double('Variable')
         variables = [variable, variable2, variable]
-        constraint = described_class.new(room: 1, variables:)
+        constraint = described_class.new(room: 1, variables: variables)
         satisfies = constraint.satisfies?({ variable => 1, variable2 => 1, variable3 => 2 })
 
         expect(satisfies).to eq false

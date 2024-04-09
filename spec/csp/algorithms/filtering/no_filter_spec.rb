@@ -13,7 +13,7 @@ RSpec.describe CSP::Algorithms::Filtering::NoFilter do
 
       filter_algorithm = described_class.new(problem)
 
-      filtered_variables = filter_algorithm.call(values:, assignment_values: [])
+      filtered_variables = filter_algorithm.call(values: values, assignment_values: [])
 
       expect(filtered_variables).to eq [1, 2, 3]
     end

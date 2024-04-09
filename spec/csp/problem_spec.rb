@@ -28,15 +28,15 @@ RSpec.describe CSP::Problem do
         constraints = { variable => [] }
         max_solutions = 2
 
-        csp = described_class.new(max_solutions:)
-          .add_variable(variable, domains:)
+        csp = described_class.new(max_solutions: max_solutions)
+          .add_variable(variable, domains: domains)
 
         expect(csp).to have_attributes(
           class: described_class,
-          variables:,
+          variables: variables,
           domains: { variable => [1, 2, 3] },
-          constraints:,
-          max_solutions:
+          constraints: constraints,
+          max_solutions: max_solutions
         )
       end
       context 'when has multiple variables' do
@@ -48,16 +48,16 @@ RSpec.describe CSP::Problem do
           constraints = { variable => [], variable2 => [] }
           max_solutions = 2
 
-          csp = described_class.new(max_solutions:)
-            .add_variable(variable, domains:)
-            .add_variable(variable2, domains:)
+          csp = described_class.new(max_solutions: max_solutions)
+            .add_variable(variable, domains: domains)
+            .add_variable(variable2, domains: domains)
 
           expect(csp).to have_attributes(
             class: described_class,
-            variables:,
+            variables: variables,
             domains: { variable => [1, 2, 3], variable2 => [1, 2, 3] },
-            constraints:,
-            max_solutions:
+            constraints: constraints,
+            max_solutions: max_solutions
           )
         end
       end
@@ -139,11 +139,11 @@ RSpec.describe CSP::Problem do
       variables = [variable]
 
       csp = described_class.new
-        .add_variable(variable, domains:)
+        .add_variable(variable, domains: domains)
 
       expect(csp).to have_attributes(
         class: described_class,
-        variables:,
+        variables: variables,
         domains: { variable => domains },
         constraints: { variable => [] },
         max_solutions: 1
@@ -158,12 +158,12 @@ RSpec.describe CSP::Problem do
         variables = [variable, variable2]
 
         csp = described_class.new
-          .add_variable(variable, domains:)
-          .add_variable(variable2, domains:)
+          .add_variable(variable, domains: domains)
+          .add_variable(variable2, domains: domains)
 
         expect(csp).to have_attributes(
           class: described_class,
-          variables:,
+          variables: variables,
           domains: { variable => domains, variable2 => domains },
           constraints: { variable => [], variable2 => [] },
           max_solutions: 1
@@ -180,10 +180,10 @@ RSpec.describe CSP::Problem do
 
         csp = described_class.new
         allow(csp).to receive(:add_variable).and_call_original
-        csp.add_variables(variables, domains:)
+        csp.add_variables(variables, domains: domains)
 
         variables.each do |variable| # rubocop:disable Lint/ShadowingOuterLocalVariable
-          expect(csp).to have_received(:add_variable).with(variable, domains:).once
+          expect(csp).to have_received(:add_variable).with(variable, domains: domains).once
         end
       end
 
@@ -194,11 +194,11 @@ RSpec.describe CSP::Problem do
         variables = [variable, variable2]
 
         csp = described_class.new
-          .add_variables(variables, domains:)
+          .add_variables(variables, domains: domains)
 
         expect(csp).to have_attributes(
           class: described_class,
-          variables:,
+          variables: variables,
           domains: { variable => domains, variable2 => domains },
           constraints: { variable => [], variable2 => [] },
           max_solutions: 1
@@ -212,7 +212,7 @@ RSpec.describe CSP::Problem do
         domains = double('Domains', empty?: false)
 
         csp = described_class.new
-        expect { csp.add_variable(variable, domains:) }
+        expect { csp.add_variable(variable, domains: domains) }
           .to raise_error described_class::VariableShouldNotBeEmpty,
                           'Variable was empty in the function parameter'
       end
@@ -222,7 +222,7 @@ RSpec.describe CSP::Problem do
         domains = double('Domains', empty?: true)
 
         csp = described_class.new
-        expect { csp.add_variable(variable, domains:) }
+        expect { csp.add_variable(variable, domains: domains) }
           .to raise_error described_class::DomainsShouldNotBeEmpty,
                           'Domains was empty in the function parameter'
       end
@@ -232,9 +232,9 @@ RSpec.describe CSP::Problem do
         domains = double('Domains', empty?: false)
 
         csp = described_class.new
-          .add_variable(variable, domains:)
+          .add_variable(variable, domains: domains)
 
-        expect { csp.add_variable(variable, domains:) }
+        expect { csp.add_variable(variable, domains: domains) }
           .to raise_error described_class::VariableAlreadySeted,
                           'Variable #[Double "Variable"] has already been seted'
       end
@@ -249,7 +249,7 @@ RSpec.describe CSP::Problem do
       domains = double('Domains', empty?: false)
 
       csp = described_class.new
-        .add_variables(variables, domains:)
+        .add_variables(variables, domains: domains)
         .all_different
 
       expect(csp.constraints[variable].first).to be_a(CSP::Constraints::AllDifferentConstraint)
@@ -267,7 +267,7 @@ RSpec.describe CSP::Problem do
       domains = double('Domains', empty?: false)
 
       csp = described_class.new
-        .add_variables(variables, domains:)
+        .add_variables(variables, domains: domains)
         .unique([variable, variable2])
 
       expect(csp.constraints[variable].first).to be_a(CSP::Constraints::UniqueConstraint)
@@ -285,7 +285,7 @@ RSpec.describe CSP::Problem do
         constraint = double('Constraint', variables: [variable])
 
         csp = described_class.new
-          .add_variable(variable, domains:)
+          .add_variable(variable, domains: domains)
           .add_constraint(constraint)
 
         expect(csp.constraints).to include(variable => [constraint])
@@ -297,11 +297,11 @@ RSpec.describe CSP::Problem do
           variable2 = double('Variable', empty?: false)
           variables = [variable, variable2]
           domains = double('Domains', empty?: false)
-          constraint = double('Constraint', variables:)
+          constraint = double('Constraint', variables: variables)
 
           csp = described_class.new
-            .add_variable(variable, domains:)
-            .add_variable(variable2, domains:)
+            .add_variable(variable, domains: domains)
+            .add_variable(variable2, domains: domains)
             .add_constraint(constraint)
 
           expect(csp.constraints).to include(variable => [constraint])
@@ -317,9 +317,9 @@ RSpec.describe CSP::Problem do
         variables = [variable]
 
         csp = described_class.new
-          .add_variable(variable, domains:)
+          .add_variable(variable, domains: domains)
 
-        csp.add_constraint(variables:) { |var| var == 0 }
+        csp.add_constraint(variables: variables) { |var| var == 0 }
 
         expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
       end
@@ -332,9 +332,9 @@ RSpec.describe CSP::Problem do
           variables = [variable, variable2]
 
           csp = described_class.new
-            .add_variables(variables, domains:)
+            .add_variables(variables, domains: domains)
 
-          csp.add_constraint(variables:) { |var, var3| var == var3 }
+          csp.add_constraint(variables: variables) { |var, var3| var == var3 }
 
           expect(csp.constraints[variable].first).to be_a(CSP::Constraints::CustomConstraint)
           expect(csp.constraints[variable2].first).to be_a(CSP::Constraints::CustomConstraint)
@@ -349,9 +349,9 @@ RSpec.describe CSP::Problem do
           domains = double('Domains', empty?: false)
           variables = [variable]
           csp = described_class.new
-            .add_variables(variables, domains:)
+            .add_variables(variables, domains: domains)
 
-          expect { csp.add_constraint(variables:) }
+          expect { csp.add_constraint(variables: variables) }
             .to raise_error ArgumentError, 'Either constraint or block must be provided'
         end
       end
@@ -362,7 +362,7 @@ RSpec.describe CSP::Problem do
           variables = [variable]
 
           csp = described_class.new
-            .add_variables(variables, domains:)
+            .add_variables(variables, domains: domains)
 
           expect { csp.add_constraint { |var, var3| var == var3 } }
             .to raise_error ArgumentError, 'Variables must be provided when using a block'
@@ -373,10 +373,10 @@ RSpec.describe CSP::Problem do
           variable = double('Variable', empty?: false)
           domains = double('Domains', empty?: false)
           variables = [variable]
-          constraint = double('Constraint', variables:)
+          constraint = double('Constraint', variables: variables)
 
           csp = described_class.new
-            .add_variables(variables, domains:)
+            .add_variables(variables, domains: domains)
 
           expect { csp.add_constraint(constraint) { |var, var3| var == var3 } }
             .to raise_error ArgumentError, 'Both constraint and block cannot be provided at the same time'
@@ -389,9 +389,9 @@ RSpec.describe CSP::Problem do
           variables = [variable]
 
           csp = described_class.new
-            .add_variables(variables, domains:)
+            .add_variables(variables, domains: domains)
 
-          expect { csp.add_constraint(variables:) { |var, var3| var == var3 } }
+          expect { csp.add_constraint(variables: variables) { |var, var3| var == var3 } }
             .to raise_error ArgumentError, 'Block should not have more arity than the quantity of variables'
         end
       end
@@ -405,7 +405,7 @@ RSpec.describe CSP::Problem do
         constraint = double('Constraint', variables: [variable])
 
         csp = described_class.new
-          .add_variable(diff_variable, domains:)
+          .add_variable(diff_variable, domains: domains)
 
         expect { csp.add_constraint(constraint) }
           .to raise_error described_class::InvalidConstraintVariable,
@@ -421,7 +421,7 @@ RSpec.describe CSP::Problem do
 
       csp.add_ordering(ordering_algorithm)
 
-      expect(csp).to have_attributes(ordering_algorithm:)
+      expect(csp).to have_attributes(ordering_algorithm: ordering_algorithm)
     end
   end
 
@@ -432,7 +432,7 @@ RSpec.describe CSP::Problem do
 
       csp.add_filtering(filtering_algorithm)
 
-      expect(csp).to have_attributes(filtering_algorithm:)
+      expect(csp).to have_attributes(filtering_algorithm: filtering_algorithm)
     end
   end
 end

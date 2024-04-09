@@ -20,7 +20,7 @@ module CSP
         domains = %w[red blue green]
 
         csp = CSP::Problem.new
-          .add_variables(variables, domains:)
+          .add_variables(variables, domains: domains)
 
         add_constraint(csp, 'Western Australia', 'Northern Territory')
         add_constraint(csp, 'Western Australia', 'South Australia')

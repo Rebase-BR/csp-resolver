@@ -14,7 +14,7 @@ module CSP
         domains = number_of_time_slots.times.to_a
 
         csp = CSP::Problem.new
-          .add_variables(variables, domains:)
+          .add_variables(variables, domains: domains)
 
         variables.combination(2).each do |events|
           add_constraint(csp, *events)

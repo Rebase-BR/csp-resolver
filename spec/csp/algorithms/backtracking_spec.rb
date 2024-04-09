@@ -16,9 +16,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
         constraint2 = double('constraint', satisfies?: false)
         constraints = { variable => [constraint], variable2 => [constraint2] }
 
-        problem = double('Problem', variables:, domains:, constraints:)
+        problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-        algorithm = described_class.new(problem:)
+        algorithm = described_class.new(problem: problem)
 
         allow(algorithm).to receive(:backtracking).and_call_original
 
@@ -39,9 +39,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
           constraint2 = double('constraint', satisfies?: true)
           constraints = { variable => [constraint], variable2 => [constraint2] }
 
-          problem = double('Problem', variables:, domains:, constraints:)
+          problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-          algorithm = described_class.new(problem:)
+          algorithm = described_class.new(problem: problem)
 
           allow(algorithm).to receive(:backtracking).and_call_original
 
@@ -68,9 +68,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
             constraint2 = double('constraint')
             constraints = { variable => [constraint], variable2 => [constraint2] }
 
-            problem = double('Problem', variables:, domains:, constraints:)
+            problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-            algorithm = described_class.new(problem:)
+            algorithm = described_class.new(problem: problem)
 
             allow(constraint2).to receive(:satisfies?).and_return(false, true)
             allow(algorithm).to receive(:backtracking).and_call_original
@@ -98,9 +98,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
             constraint2 = double('constraint', satisfies?: false)
             constraints = { variable => [constraint], variable2 => [constraint2] }
 
-            problem = double('Problem', variables:, domains:, constraints:)
+            problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-            algorithm = described_class.new(problem:)
+            algorithm = described_class.new(problem: problem)
 
             allow(algorithm).to receive(:backtracking).and_call_original
 
@@ -122,9 +122,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
         constraint = double('constraint', satisfies?: false)
         constraints = { variable => [constraint] }
 
-        problem = double('Problem', variables:, domains:, constraints:)
+        problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-        algorithm = described_class.new(problem:)
+        algorithm = described_class.new(problem: problem)
 
         expect(algorithm.backtracking).to be_empty
       end
@@ -137,7 +137,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         assignment = { variable => 1 }
 
-        algorithm = described_class.new(problem:)
+        algorithm = described_class.new(problem: problem)
 
         expect(algorithm.backtracking(assignment)).to eq [assignment]
       end
@@ -156,9 +156,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         ordering_algorithm = double('OrderingAlgorithm')
 
-        problem = double('Problem', variables:, domains:, constraints:)
+        problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-        algorithm = described_class.new(problem:, ordering_algorithm:)
+        algorithm = described_class.new(problem: problem, ordering_algorithm: ordering_algorithm)
 
         allow(algorithm).to receive(:backtracking).and_call_original
         allow(algorithm).to receive(:domains_for).and_call_original
@@ -181,9 +181,9 @@ RSpec.describe CSP::Algorithms::Backtracking do
         constraints = { variable => [constraint] }
         filtering_algorithm = double('FilteringAlgorithm')
 
-        problem = double('Problem', variables:, domains:, constraints:)
+        problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
 
-        algorithm = described_class.new(problem:, filtering_algorithm:)
+        algorithm = described_class.new(problem: problem, filtering_algorithm: filtering_algorithm)
 
         allow(algorithm).to receive(:backtracking).and_call_original
         allow(algorithm).to receive(:consistent?).and_call_original
@@ -217,7 +217,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
         )
 
         consistent = described_class
-          .new(problem:)
+          .new(problem: problem)
           .consistent?(variable, assignment)
 
         expect(consistent).to eq true
@@ -239,7 +239,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
         )
 
         consistent = described_class
-          .new(problem:)
+          .new(problem: problem)
           .consistent?(variable, assignment)
 
         expect(consistent).to eq false
