@@ -14,9 +14,7 @@ module CSP
           .add_constraint(QueensConstraint.new(variables))
         solution = csp.solve
 
-        message = solution || 'No solution found'
-
-        puts message
+        solution || 'No solution found'
       end
     end
 

@@ -34,9 +34,7 @@ module CSP
         add_constraint(csp, 'Victoria', 'Tasmania')
 
         solution = csp.solve
-        message = solution || 'No solution found'
-
-        puts(message)
+        solution || 'No solution found'
       end
 
       def add_constraint(csp, place1, place2)

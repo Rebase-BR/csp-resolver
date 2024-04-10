@@ -21,9 +21,7 @@ module CSP
         end
 
         solution = csp.solve
-        message = solution || 'No solution found'
-
-        puts(message)
+        solution || 'No solution found'
       end
 
       def add_constraint(csp, event1, event2)
