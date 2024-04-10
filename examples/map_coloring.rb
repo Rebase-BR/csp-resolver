@@ -4,7 +4,7 @@ require_relative '../lib/csp/constraint'
 require_relative '../lib/csp/problem'
 
 module CSP
-  module Problems
+  module Examples
     class MapColoring
       def call # rubocop:disable Metrics/MethodLength
         variables = [

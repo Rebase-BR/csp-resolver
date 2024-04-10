@@ -4,7 +4,7 @@ require_relative '../lib/csp/constraint'
 require_relative '../lib/csp/problem'
 
 module CSP
-  module Problems
+  module Examples
     class Queen
       def call(queens_number = 8)
         variables = queens_number.times.to_a
