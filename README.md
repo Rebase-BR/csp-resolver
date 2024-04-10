@@ -53,7 +53,9 @@ class Example
     end
 end
 ```
-```[{"A"=>2, "B"=>1, "C"=>1}]```
+This is the return of our call method: ```[{"A"=>2, "B"=>1, "C"=>1}]```
+<br>
+So sculpture A must be in the room 2, B and C must be in the room one.
 <br>
 <br>
 add_variables -> add especified variables to the problem with the same domain
