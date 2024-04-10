@@ -1,31 +1,69 @@
-# CSP
+# CSP Resolver
+The `csp-resolver` gem is a powerful tool designed to solve Constraint Satisfaction Problems (CSPs), which are mathematical questions defined by strict constraints that must be met. This tool is suitable for a wide range of applications, from scheduling and planning to configuring complex systems.
 
-TODO: Delete this and the text below, and describe your gem
+## Using
+### Requirements
+ - **Ruby** >= 2.5.8
+### Example
+Add this line to your application's Gemfile:<br>
+```gem 'csp-resolver'```
+<br>
+then execute:<br>
+```bundle install```
+<br>
+or install directly:<br>
+```gem install csp-resolver```
+#### Example.rb
+***This example is present in the examples folder.***
+    In this example we have three sculptures (A, B, C) are to be exhibited in rooms 1,2 of an art gallery
+    The exhibition must satisfy the following conditions:
+    1. Sculptures A and B cannot be in the same room
+    2. Sculptures B and C must be in the same room
+    3. Room 2 can only hold one sculpture
+```ruby
+require 'csp'
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/csp`. To experiment with that code, run `bin/console` for an interactive prompt.
+class Example
+    def call
+      variables = %w[A B C]
 
-## Installation
+      csp = CSP::Problem.new
+        .add_variables(variables, domains: [1, 2])
+        .unique(%w[A B])
+        .add_constraint(variables: %w[B C]) { |b, c| b == c }
+        .add_constraint(RoomLimitToOneConstraint.new(room: 2, variables: variables))
+      solution = csp.solve
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+      solution || 'No solution found'
+    end
 
-Install the gem and add to the application's Gemfile by executing:
+    class RoomLimitToOneConstraint < ::CSP::Constraint
+      attr_reader :room
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+      def initialize(room:, variables:)
+          super(variables)
+          @room = room
+      end
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+      def satisfies?(assignment)
+          values = assignment.values_at(*variables)
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+          values.count(room) <= 1
+      end
+    end
+end
+```
+```[{"A"=>2, "B"=>1, "C"=>1}]```
+<br>
+<br>
+add_variables -> add especified variables to the problem with the same domain
+<br>
+unique -> the especified variables should be different
+<br>
+add_constraint -> add a constraint to especified variables, you can pass a constraint instance or a block
+<br>
+solve -> runs the algorithm to solve the problem
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/csp.
+***To get more details or more methos check the docs***
+## License
+This project is licensed under the [MIT License](MIT-LICENSE).
