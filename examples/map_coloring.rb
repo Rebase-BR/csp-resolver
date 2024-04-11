@@ -40,23 +40,23 @@ module CSP
       def add_constraint(csp, place1, place2)
         csp.add_constraint(MapColoringConstraint.new(place1, place2))
       end
-    end
 
-    class MapColoringConstraint < ::CSP::Constraint
-      attr_reader :place1, :place2
+      class MapColoringConstraint < ::CSP::Constraint
+        attr_reader :place1, :place2
 
-      def initialize(place1, place2)
-        super([place1, place2])
+        def initialize(place1, place2)
+          super([place1, place2])
 
-        @place1 = place1
-        @place2 = place2
-      end
+          @place1 = place1
+          @place2 = place2
+        end
 
-      def satisfies?(assignment)
-        # If any of them is not assigned then there's no conflict
-        return true if variables.any? { |variable| !assignment.key?(variable) }
+        def satisfies?(assignment)
+          # If any of them is not assigned then there's no conflict
+          return true if variables.any? { |variable| !assignment.key?(variable) }
 
-        assignment[place1] != assignment[place2]
+          assignment[place1] != assignment[place2]
+        end
       end
     end
   end

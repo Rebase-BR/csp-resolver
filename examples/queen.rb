@@ -16,30 +16,30 @@ module CSP
 
         solution || 'No solution found'
       end
-    end
 
-    class QueensConstraint < ::CSP::Constraint
-      attr_reader :columns
+      class QueensConstraint < ::CSP::Constraint
+        attr_reader :columns
 
-      def initialize(columns)
-        super(columns)
+        def initialize(columns)
+          super(columns)
 
-        @columns = columns
-      end
-
-      def satisfies?(assignment)
-        assignment.each do |(queen_col1, queen_row1)|
-          (queen_col1 + 1..columns.size).each do |queen_col2|
-            next unless assignment.key?(queen_col2)
-
-            queen_row2 = assignment[queen_col2]
-
-            return false if queen_row1 == queen_row2
-            return false if (queen_row1 - queen_row2).abs == (queen_col1 - queen_col2).abs
-          end
+          @columns = columns
         end
 
-        true
+        def satisfies?(assignment)
+          assignment.each do |(queen_col1, queen_row1)|
+            (queen_col1 + 1..columns.size).each do |queen_col2|
+              next unless assignment.key?(queen_col2)
+
+              queen_row2 = assignment[queen_col2]
+
+              return false if queen_row1 == queen_row2
+              return false if (queen_row1 - queen_row2).abs == (queen_col1 - queen_col2).abs
+            end
+          end
+
+          true
+        end
       end
     end
   end

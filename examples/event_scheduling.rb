@@ -27,22 +27,22 @@ module CSP
       def add_constraint(csp, event1, event2)
         csp.add_constraint(OnlyOneConstraint.new(event1, event2))
       end
-    end
 
-    class OnlyOneConstraint < ::CSP::Constraint
-      attr_reader :event1, :event2
+      class OnlyOneConstraint < ::CSP::Constraint
+        attr_reader :event1, :event2
 
-      def initialize(event1, event2)
-        super([event1, event2])
+        def initialize(event1, event2)
+          super([event1, event2])
 
-        @event1 = event1
-        @event2 = event2
-      end
+          @event1 = event1
+          @event2 = event2
+        end
 
-      def satisfies?(assignment)
-        return true if variables.any? { |variable| !assignment.key?(variable) }
+        def satisfies?(assignment)
+          return true if variables.any? { |variable| !assignment.key?(variable) }
 
-        assignment[event1] != assignment[event2]
+          assignment[event1] != assignment[event2]
+        end
       end
     end
   end
