@@ -72,7 +72,7 @@ module CSP
       def unassigned_variables(assignment)
         variables
           .reject { |variable| assignment.key?(variable) }
-          .then { ordering_algorithm.call(_1) }
+          .yield_self { |v| ordering_algorithm.call(v) }
       end
 
       def domains_for(unassigned, assignment)
