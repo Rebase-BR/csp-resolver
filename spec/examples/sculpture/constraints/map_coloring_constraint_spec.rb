@@ -5,7 +5,6 @@ require_relative '../../../../examples/map_coloring'
 
 RSpec.describe CSP::Examples::MapColoring::MapColoringConstraint do
   describe '#satisfies?' do
-
     context 'when both regions are assigned different colors' do
       it 'returns true' do
         assignment = {
