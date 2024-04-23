@@ -79,6 +79,7 @@ RSpec.describe CSP::Problem do
           problem: csp,
           ordering_algorithm: nil,
           filtering_algorithm: nil,
+          lookahead_algorithm: nil,
           max_solutions: 1
         )
         .and_return algorithm
@@ -100,6 +101,7 @@ RSpec.describe CSP::Problem do
           problem: csp,
           ordering_algorithm: nil,
           filtering_algorithm: nil,
+          lookahead_algorithm: nil,
           max_solutions: 1
         )
         .and_return algorithm
@@ -123,6 +125,7 @@ RSpec.describe CSP::Problem do
           problem: csp,
           ordering_algorithm: nil,
           filtering_algorithm: nil,
+          lookahead_algorithm: nil,
           max_solutions: 1
         )
         .and_return algorithm
@@ -433,6 +436,17 @@ RSpec.describe CSP::Problem do
       csp.add_filtering(filtering_algorithm)
 
       expect(csp).to have_attributes(filtering_algorithm: filtering_algorithm)
+    end
+  end
+
+  describe '#add_lookahead' do
+    it 'sets the lookahead algorithm for CSP' do
+      lookahead_algorithm = instance_double(CSP::Algorithms::Lookahead::Ac3)
+      csp = described_class.new
+
+      csp.add_lookahead(lookahead_algorithm)
+
+      expect(csp).to have_attributes(lookahead_algorithm: lookahead_algorithm)
     end
   end
 end

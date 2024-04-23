@@ -11,7 +11,7 @@ module CSP
     include CSP::Constraints
 
     attr_reader :variables, :domains, :constraints, :max_solutions,
-                :ordering_algorithm, :filtering_algorithm
+                :ordering_algorithm, :filtering_algorithm, :lookahead_algorithm
 
     InvalidConstraintVariable = Class.new(StandardError)
     VariableShouldNotBeEmpty = Class.new(StandardError)
@@ -74,6 +74,10 @@ module CSP
       @filtering_algorithm = filtering_algorithm
     end
 
+    def add_lookahead(lookahead_algorithm)
+      @lookahead_algorithm = lookahead_algorithm
+    end
+
     private
 
     def validate_parameters(constraint, variables, block)
@@ -116,6 +120,7 @@ module CSP
         problem: self,
         ordering_algorithm: ordering_algorithm,
         filtering_algorithm: filtering_algorithm,
+        lookahead_algorithm: lookahead_algorithm,
         max_solutions: max_solutions
       )
     end

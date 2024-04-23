@@ -20,11 +20,11 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         algorithm = described_class.new(problem: problem)
 
-        allow(algorithm).to receive(:backtracking).and_call_original
+        allow(algorithm).to receive(:backtracking_recursion).and_call_original
 
         expect(algorithm.backtracking).to be_empty
-        expect(algorithm).to have_received(:backtracking).with(no_args)
-        expect(algorithm).to have_received(:backtracking).with({ variable => 1 })
+        expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
+        expect(algorithm).to have_received(:backtracking_recursion).with({ variable => 1 }, domains)
       end
 
       context 'when backtracking returns a solution' do
@@ -43,15 +43,17 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
           algorithm = described_class.new(problem: problem)
 
-          allow(algorithm).to receive(:backtracking).and_call_original
+          allow(algorithm).to receive(:backtracking_recursion).and_call_original
 
           expect(algorithm.backtracking).to eq [variable => 1, variable2 => 10]
-          expect(algorithm).to have_received(:backtracking).with(no_args)
-          expect(algorithm).to have_received(:backtracking).with({ variable => 1 })
-          expect(algorithm).to have_received(:backtracking).with({
-            variable => 1,
-            variable2 => 10
-          })
+          expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
+          expect(algorithm).to have_received(:backtracking_recursion).with({ variable => 1 }, domains)
+          expect(algorithm).to have_received(:backtracking_recursion).with(
+            {
+              variable => 1,
+              variable2 => 10
+            }, domains
+          )
         end
       end
 
@@ -73,16 +75,16 @@ RSpec.describe CSP::Algorithms::Backtracking do
             algorithm = described_class.new(problem: problem)
 
             allow(constraint2).to receive(:satisfies?).and_return(false, true)
-            allow(algorithm).to receive(:backtracking).and_call_original
+            allow(algorithm).to receive(:backtracking_recursion).and_call_original
 
             expect(algorithm.backtracking).to eq [variable => 2, variable2 => 10]
-            expect(algorithm).to have_received(:backtracking).with(no_args)
-            expect(algorithm).to have_received(:backtracking).with({ variable => 1 })
-            expect(algorithm).to have_received(:backtracking).with({ variable => 2 })
-            expect(algorithm).to have_received(:backtracking).with({
+            expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
+            expect(algorithm).to have_received(:backtracking_recursion).with({ variable => 1 }, domains)
+            expect(algorithm).to have_received(:backtracking_recursion).with({ variable => 2 }, domains)
+            expect(algorithm).to have_received(:backtracking_recursion).with({
               variable => 2,
               variable2 => 10
-            })
+            }, domains)
           end
         end
 
@@ -102,11 +104,11 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
             algorithm = described_class.new(problem: problem)
 
-            allow(algorithm).to receive(:backtracking).and_call_original
+            allow(algorithm).to receive(:backtracking_recursion).and_call_original
 
             expect(algorithm.backtracking).to be_empty
-            expect(algorithm).to have_received(:backtracking).with(no_args)
-            expect(algorithm).to have_received(:backtracking).with({ variable => 1 })
+            expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
+            expect(algorithm).to have_received(:backtracking_recursion).with({ variable => 1 }, domains)
           end
         end
       end
@@ -133,7 +135,8 @@ RSpec.describe CSP::Algorithms::Backtracking do
     context 'when all variables are assigned' do
       it 'returns the assignments' do
         variable = double('Variable')
-        problem = double('Problem', variables: [variable])
+        domain = double('Domains')
+        problem = double('Problem', variables: [variable], domains: [domain])
 
         assignment = { variable => 1 }
 
@@ -160,15 +163,15 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         algorithm = described_class.new(problem: problem, ordering_algorithm: ordering_algorithm)
 
-        allow(algorithm).to receive(:backtracking).and_call_original
+        allow(algorithm).to receive(:backtracking_recursion).and_call_original
         allow(algorithm).to receive(:domains_for).and_call_original
         allow(ordering_algorithm).to receive(:call), &:reverse
 
         expect(algorithm.backtracking).to eq([{ variable => 1, variable2 => 3 }])
-        expect(algorithm).to have_received(:backtracking).with(no_args)
-        expect(algorithm).to have_received(:backtracking).with(variable2 => 3)
-        expect(algorithm).to have_received(:domains_for).with(variable2, {})
-        expect(algorithm).to have_received(:domains_for).with(variable, { variable2 => 3 })
+        expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
+        expect(algorithm).to have_received(:backtracking_recursion).with({variable2 => 3}, domains)
+        expect(algorithm).to have_received(:domains_for).with(variable2, {}, domains)
+        expect(algorithm).to have_received(:domains_for).with(variable, { variable2 => 3 }, domains)
       end
     end
 
@@ -198,6 +201,56 @@ RSpec.describe CSP::Algorithms::Backtracking do
           values: [1, 2, 3, 4, 5],
           assignment_values: []
         )
+      end
+    end
+
+    context 'when using different lookahead algorithm' do
+      context 'when domain and lookahead are consistent' do
+        it 'recurses with a pruned domain' do
+          variable1 = double('Variable')
+          variable2 = double('Variable')
+          variables = [variable1, variable2]
+
+          domains = { variable1 => [1, 2], variable2 =>  [1, 2] }
+
+          constraint = double('constraint', variables: variables, binary?: true, unary?: false)
+          constraints = { variable1 => [constraint], variable2 => [constraint] }
+
+          problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
+
+          allow(constraint).to receive(:satisfies?).and_return(true, false, false, true)
+
+          algorithm = described_class.new(
+            problem: problem,
+            lookahead_algorithm: CSP::Algorithms::Lookahead::Ac3.new(problem)
+          )
+
+          expect(algorithm.backtracking).to eq([{ variable1 => 2, variable2 => 1 }])
+        end
+      end
+
+      context 'when domain is consistent but lookahead fails' do
+        it 'does not consider value assignment' do
+          variable1 = double('Variable')
+          variable2 = double('Variable')
+          variables = [variable1, variable2]
+
+          domains = { variable1 => [1, 2], variable2 =>  [1, 2] }
+
+          constraint = double('constraint', variables: variables, binary?: true, unary?: false)
+          constraints = { variable1 => [constraint], variable2 => [constraint] }
+
+          problem = double('Problem', variables: variables, domains: domains, constraints: constraints)
+
+          allow(constraint).to receive(:satisfies?).and_return(true, false)
+
+          algorithm = described_class.new(
+            problem: problem,
+            lookahead_algorithm: CSP::Algorithms::Lookahead::Ac3.new(problem)
+          )
+
+          expect(algorithm.backtracking).to be_empty
+        end
       end
     end
   end
