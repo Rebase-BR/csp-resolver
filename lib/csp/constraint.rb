@@ -20,10 +20,6 @@ module CSP
       arity == 2
     end
 
-    def n_ary?(n)
-      arity == n
-    end
-
     def arity
       @arity ||= variables.size
     end

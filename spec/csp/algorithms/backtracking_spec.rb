@@ -169,7 +169,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
 
         expect(algorithm.backtracking).to eq([{ variable => 1, variable2 => 3 }])
         expect(algorithm).to have_received(:backtracking_recursion).with({}, domains)
-        expect(algorithm).to have_received(:backtracking_recursion).with({variable2 => 3}, domains)
+        expect(algorithm).to have_received(:backtracking_recursion).with({ variable2 => 3 }, domains)
         expect(algorithm).to have_received(:domains_for).with(variable2, {}, domains)
         expect(algorithm).to have_received(:domains_for).with(variable, { variable2 => 3 }, domains)
       end
@@ -211,7 +211,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
           variable2 = double('Variable')
           variables = [variable1, variable2]
 
-          domains = { variable1 => [1, 2], variable2 =>  [1, 2] }
+          domains = { variable1 => [1, 2], variable2 => [1, 2] }
 
           constraint = double('constraint', variables: variables, binary?: true, unary?: false)
           constraints = { variable1 => [constraint], variable2 => [constraint] }
@@ -235,7 +235,7 @@ RSpec.describe CSP::Algorithms::Backtracking do
           variable2 = double('Variable')
           variables = [variable1, variable2]
 
-          domains = { variable1 => [1, 2], variable2 =>  [1, 2] }
+          domains = { variable1 => [1, 2], variable2 => [1, 2] }
 
           constraint = double('constraint', variables: variables, binary?: true, unary?: false)
           constraints = { variable1 => [constraint], variable2 => [constraint] }

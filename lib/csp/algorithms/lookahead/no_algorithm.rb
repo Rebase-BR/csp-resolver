@@ -10,7 +10,7 @@ module CSP
           @problem = problem
         end
 
-        def call(variables:, assignment:, domains:)
+        def call(variables:, assignment:, domains:) # rubocop:disable Lint/UnusedMethodArgument
           domains
         end
       end

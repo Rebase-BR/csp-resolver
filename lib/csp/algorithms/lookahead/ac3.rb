@@ -11,10 +11,10 @@ module CSP
         end
 
         def call(variables:, assignment:, domains:)
-          new_domains = variables.each_with_object({}) do |variable, new_domains|
+          new_domains = variables.each_with_object({}) do |variable, domains_hash|
             variable_domains = Array(assignment[variable] || domains[variable])
 
-            new_domains[variable] = unary_check(variable, variable_domains)
+            domains_hash[variable] = unary_check(variable, variable_domains)
           end
 
           variable_arcs = arcs(variables)
@@ -30,20 +30,17 @@ module CSP
             x, y = arc.keys.first
             constraint = arc.values.first
 
-            if arc_reduce(x, y, constraint, domains)
-              if domains[x].empty?
-                return nil
-              else
-                new_arcs = find_arcs(x, y, arcs)
-                queue.push(*new_arcs)
-              end
-            end
+            next unless arc_reduce(x, y, constraint, domains)
+            return nil if domains[x].empty?
+
+            new_arcs = find_arcs(x, y, arcs)
+            queue.push(*new_arcs)
           end
 
           domains
         end
 
-        def arc_reduce(x, y, constraint, domains)
+        def arc_reduce(x, y, constraint, domains) # rubocop:disable Naming/MethodParameterName
           changed = false
           x_domains = domains[x]
           y_domains = domains[y]
@@ -67,7 +64,7 @@ module CSP
         end
 
         # Returns all (z, x) arcs where z != y
-        def find_arcs(x, y, arcs)
+        def find_arcs(x, y, arcs) # rubocop:disable Naming/MethodParameterName
           arcs.select do |arc|
             arc.any? do |(first, second), _constraint|
               first != y && second == x
@@ -101,4 +98,3 @@ module CSP
     end
   end
 end
-

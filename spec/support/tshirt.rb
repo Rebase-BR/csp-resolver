@@ -47,7 +47,6 @@ class Tshirt
     def satisfies?(assignment = {})
       return true if skip?(assignment)
 
-
       picked_color = assignment[person]
 
       picked_color != color

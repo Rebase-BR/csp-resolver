@@ -19,7 +19,13 @@ module CSP
 
       def_delegators :problem, :variables, :constraints
 
-      def initialize(problem:, ordering_algorithm: nil, filtering_algorithm: nil, lookahead_algorithm: nil, max_solutions: 1)
+      def initialize(
+        problem:,
+        ordering_algorithm: nil,
+        filtering_algorithm: nil,
+        lookahead_algorithm: nil,
+        max_solutions: 1
+      )
         @problem = problem
         @ordering_algorithm = ordering_algorithm || ORDERING_ALGORITHM.new(problem)
         @filtering_algorithm = filtering_algorithm || FILTERING_ALGORITHM.new(problem)

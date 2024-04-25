@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative '../../../support/tshirt'
 require_relative '../../../../lib/csp/algorithms/lookahead/ac3'
 
@@ -66,7 +67,7 @@ RSpec.describe CSP::Algorithms::Lookahead::Ac3 do
 
         new_domains = algorithm.call(
           variables: variables,
-          assignment: { 'A' => 'red'},
+          assignment: { 'A' => 'red' },
           domains: domains
         )
 
@@ -128,7 +129,7 @@ RSpec.describe CSP::Algorithms::Lookahead::Ac3 do
 
     context 'when it is inconsistent' do
       it 'returns nil' do
-        puts "_" * 20
+        puts '_' * 20
         color_constraint = Tshirt::ColorConstraint
         unique_constraint = Tshirt::UniqueConstraint
 

@@ -23,3 +23,6 @@ Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
 Style/ObjectThen:
   EnforcedStyle: yield_self
+Naming/FileName:
+  Exclude:
+    - 'lib/csp-resolver.rb'
