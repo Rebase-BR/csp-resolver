@@ -66,6 +66,6 @@ add_constraint -> add a constraint to especified variables, you can pass a const
 <br>
 solve -> runs the algorithm to solve the problem
 
-***To get more details or more methos check the docs***
+***To get more details or more methods check the docs***
 ## License
 This project is licensed under the [MIT License](MIT-LICENSE).
