@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/csp/constraint'
-
 class Tshirt
   def people
     %w[A B C]

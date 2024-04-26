@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'filtering/no_filter'
-require_relative 'ordering/no_order'
-require_relative 'lookahead/no_algorithm'
 require 'forwardable'
 
 module CSP

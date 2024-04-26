@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'simplecov'
+require_relative '../lib/csp-resolver'
 
 if ENV['COVERAGE']
   SimpleCov.start do
