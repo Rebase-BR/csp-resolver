@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'csp/algorithms/backtracking'
 
 RSpec.describe CSP::Algorithms::Backtracking do
   describe '#backtracking' do

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'csp/problem'
-require 'csp/constraints'
 
 RSpec.describe CSP::Problem do
   describe 'initialization' do

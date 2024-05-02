@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'csp/constraint'
 
 RSpec.describe CSP::Constraint do
   describe '#satisfies?' do

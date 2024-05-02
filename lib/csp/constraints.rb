@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'constraint'
-
 module CSP
   module Constraints
     class AllDifferentConstraint < CSP::Constraint

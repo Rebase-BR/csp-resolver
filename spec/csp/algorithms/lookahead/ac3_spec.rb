@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../../../support/tshirt'
-require_relative '../../../../lib/csp/algorithms/lookahead/ac3'
 
 RSpec.describe CSP::Algorithms::Lookahead::Ac3 do
   describe '#call' do

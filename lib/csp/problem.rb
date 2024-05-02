@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'algorithms/backtracking'
-require_relative 'utils'
-require_relative 'constraints'
-
 module CSP
   # TODO: implement dependent factor with weight
   # TODO: implement lookahead, arc-consistency, ac3
