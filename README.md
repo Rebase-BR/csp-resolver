@@ -256,5 +256,11 @@ problem.solve
 # => { 'A' => 'green', 'B' => 'red', 'C' => 'purple' }
 ```
 
+## Contributing
+See our [CONTRIBUTING](./CONTRIBUTING.md) guidelines.
+
+## Code of Conduct
+We expect that everyone participating in any way with this project follows our [Code of Conduct](./CODE_OF_CONDUCT.md).
+
 ## License
 This project is licensed under the [MIT License](MIT-LICENSE).
