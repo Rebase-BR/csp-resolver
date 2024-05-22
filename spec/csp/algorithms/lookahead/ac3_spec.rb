@@ -128,7 +128,6 @@ RSpec.describe CSP::Algorithms::Lookahead::Ac3 do
 
     context 'when it is inconsistent' do
       it 'returns nil' do
-        puts '_' * 20
         color_constraint = Tshirt::ColorConstraint
         unique_constraint = Tshirt::UniqueConstraint
 
