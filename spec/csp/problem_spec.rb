@@ -419,8 +419,7 @@ RSpec.describe CSP::Problem do
     it 'sets the ordering algorithm for CSP' do
       ordering_algorithm = instance_double(CSP::Algorithms::Ordering::NoOrder)
       csp = described_class.new
-
-      csp.add_ordering(ordering_algorithm)
+        .add_ordering(ordering_algorithm)
 
       expect(csp).to have_attributes(ordering_algorithm: ordering_algorithm)
     end
@@ -430,8 +429,7 @@ RSpec.describe CSP::Problem do
     it 'sets the filtering algorithm for CSP' do
       filtering_algorithm = instance_double(CSP::Algorithms::Filtering::NoFilter)
       csp = described_class.new
-
-      csp.add_filtering(filtering_algorithm)
+        .add_filtering(filtering_algorithm)
 
       expect(csp).to have_attributes(filtering_algorithm: filtering_algorithm)
     end
@@ -441,8 +439,7 @@ RSpec.describe CSP::Problem do
     it 'sets the lookahead algorithm for CSP' do
       lookahead_algorithm = instance_double(CSP::Algorithms::Lookahead::Ac3)
       csp = described_class.new
-
-      csp.add_lookahead(lookahead_algorithm)
+        .add_lookahead(lookahead_algorithm)
 
       expect(csp).to have_attributes(lookahead_algorithm: lookahead_algorithm)
     end

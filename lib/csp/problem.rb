@@ -64,14 +64,17 @@ module CSP
 
     def add_ordering(ordering_algorithm)
       @ordering_algorithm = ordering_algorithm
+      self
     end
 
     def add_filtering(filtering_algorithm)
       @filtering_algorithm = filtering_algorithm
+      self
     end
 
     def add_lookahead(lookahead_algorithm)
       @lookahead_algorithm = lookahead_algorithm
+      self
     end
 
     private
