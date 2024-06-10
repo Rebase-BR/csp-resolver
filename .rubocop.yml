@@ -26,3 +26,5 @@ Style/ObjectThen:
 Naming/FileName:
   Exclude:
     - 'lib/csp-resolver.rb'
+Gemspec/RequireMFA:
+  Enabled: false
